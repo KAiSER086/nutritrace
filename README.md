@@ -64,6 +64,7 @@ NutriTrace runs as a single Docker container on your own hardware, with a PWA fo
 - **Migrations.** MyFitnessPal (with nomad64 scraper), Lose It, Cronometer, Waistline. [Full guide](https://traceapps.github.io/docs/nutritrace/migrate-mfp/).
 - **Multi-user + OIDC SSO.** Authentik/Keycloak/Pocket ID/Authelia/Google/Auth0. [Full guide](https://traceapps.github.io/docs/auth/oidc/).
 - **Native Android app.** Offline mode or server-sync, WorkManager native reminders. [Full guide](https://traceapps.github.io/docs/mobile/install/).
+- **Foldables (preliminary).** Half open like a book, Settings puts its section list on one side of the crease and the section on the other, the day's meals fall onto the two pages, and dialogs, sheets, pickers and Trace keep off the fold. Opened flat or on a tablet, the wider layouts turn on: Foods two cards across, side rails on Diary and Goals, and the food and meal editors side by side.
 
 ---
 
@@ -188,7 +189,7 @@ The database schema migrates automatically on startup.
 
 ## Trace family
 
-Part of the **TraceApps** family. Sister apps: [CookTrace](https://github.com/traceapps/cooktrace) for recipes and pantry, [LiftTrace](https://github.com/traceapps/lifttrace) for weightlifting. Full docs for all three at [traceapps.github.io/docs](https://traceapps.github.io/docs/).
+Part of the **TraceApps** family. Sister apps: [CookTrace](https://github.com/traceapps/cooktrace) for recipes and pantry, [LiftTrace](https://github.com/traceapps/lifttrace) for weightlifting, [NoteTrace](https://github.com/traceapps/notetrace) for notes, tasks and reminders. Docs for the family at [traceapps.github.io/docs](https://traceapps.github.io/docs/).
 
 ---
 
