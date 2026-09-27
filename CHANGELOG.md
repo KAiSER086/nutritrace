@@ -7,9 +7,22 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+---
+
+## [1.4.0-dev03] - 2026-09-27 (pre-release)
+
+Third dev pre-release of 1.4.0: preliminary foldable support, search that ignores accents, and Open Food Facts products that come in with the right values.
+
 ### Added
 
-- **Foldables use the crease.** Half open like a book, Settings puts its section list on one side and the section on the other, dialogs, sheets, pickers and Trace keep off the fold, and a menu opened near it takes the roomier side rather than being cut in half by the hinge. In laptop posture Trace sits on the half lying flat, leaving the day readable on the half standing up. The diary, charts and photos still cross the fold freely: an opened foldable is a bigger screen to read a day on.
+- **Preliminary foldable support.** NutriTrace knows where a foldable's crease is, in the Android app and in browsers that report it, and lays out around it:
+  - Half open like a book, Settings puts its section list on one side and the section on the other, and the day's meals fall onto the two pages.
+  - Dialogs, sheets, pickers, menus and Trace keep off the fold, and a menu opened near it takes the roomier side.
+  - In laptop posture, Trace sits on the half lying flat, leaving the day readable on the half standing up.
+  - Opened flat, or on any screen that size, the wider layouts turn on: Settings in two panes, Foods two cards across, side rails on Diary and Goals, the food and meal editors side by side, and Wellness insights alongside.
+  - Diagnostics shows what the hinge reports.
+
+  Charts and photos still cross the fold, since an opened foldable is a bigger screen to read them on.
 
 ### Changed
 
@@ -17,12 +30,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
-- **Search ignores accents.** Typing "platano" finds "Plátano", "cafe" finds "Café", "limon" finds "Limón". This holds for your foods, meals and recipes, activities, units, the metric and goal filters, Settings search, Smart Log, Trace, the public API and the MCP tools, on names and brands alike, offline as well as online. A diary kept in Spanish, Portuguese, French or another language with accents no longer looks like the food is missing because nobody types the accent on a phone. Text without accents matches exactly as before.
-- **A local Open Food Facts mirror finds accented product names too.** A search that comes back empty is retried with accents stripped, so "creme fraiche" reaches "Crème fraîche" without slowing down the searches that already worked.
-- **Refresh from OFF brings a food up to date with Open Food Facts** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). It only filled empty fields, so a value changed on Open Food Facts never came through, and a server with a local Open Food Facts mirror answered from its older copy. It now updates the values Open Food Facts has, converted to the food's own portion, leaves the rest alone, and says when there is nothing it can use. Thanks @fatman00 for the report.
-- **Open Food Facts products with no "as sold" values no longer come in as 0 kcal** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). Search results say "No values listed", the product can't be added to the diary or a meal until it has values, and Trace and Smart Log say so instead of logging 0 kcal. When Open Food Facts only has "as prepared" values, the food editor shows them and lets you choose to use them, with a note on the food saying so.
+- **Search ignores accents.** "platano" finds "Plátano" and "cafe" finds "Café" wherever you search: your foods, meals and recipes, activities, Settings, Smart Log, Trace, the public API and MCP, offline too. A local Open Food Facts mirror finds accented names as well. Text without accents matches as before.
+- **Searches and scans on a local Open Food Facts mirror no longer fail now and then.** Two at once could fail, and the server then asked Open Food Facts instead, or answered nothing when air-gapped.
+- **Refresh from OFF brings a food up to date with Open Food Facts** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). It only filled empty fields, and a server with a local Open Food Facts mirror answered from its older copy. It now updates the values Open Food Facts has, converted to the food's portion. Thanks @fatman00 for the report.
+- **Open Food Facts products with both "as sold" and "as prepared" values come in "as sold"** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). Open Food Facts' API gave NutriTrace only the "as prepared" values for these, such as canned beans, drink powders and baby formula.
+- **Open Food Facts products with no values no longer come in as 0 kcal** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). Search results say "No values listed", the product can't be added to the diary or a meal until it has values, and Trace and Smart Log say so. If Open Food Facts only has "as prepared" values, the food editor offers them and notes it on the food.
 - **Trace, Smart Log and the meal editor use a product's real values when a search result leaves them out.** They used to save it as 0 kcal.
-- **Open Food Facts products with both "as sold" and "as prepared" values come in "as sold"** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). Open Food Facts' API only gave NutriTrace the "as prepared" values for these products, such as a can of beans, drink powders and baby formula.
+
+### Security
+
+- No security fixes this cycle. `npm audit` reports 0 vulnerabilities for the app and the server, there are no open Dependabot alerts, and the only new dependency is androidx.window 1.3.0 on Android, which tells the app where a foldable's crease is.
 
 ---
 
