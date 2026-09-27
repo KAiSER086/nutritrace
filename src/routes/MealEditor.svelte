@@ -22,7 +22,9 @@
   import { foodsShowCategories, foodsShowLabels, foodsShowNotes, foodCategories, cropPhotos, visibleNutriments, nutrimentsOrder, catName as _catName, catDisplay as _catDisplay, energyUnit, foodsSort, mealsSort, recipesSort, offEnabled, usdaEnabled, usdaApiKey } from '../stores/settings.js';
   import { fitImageDataUrl } from '../lib/image-fit.js';
   import { draftKey as _mkDraftKey, loadDraft, loadDraftImg, clearDraft, makeDebouncedPersist } from '../lib/editor-draft.js';
-  import { decimalInput, parseDecimal } from '../lib/decimal-input.js';
+  import { decimalInput, parseDecimal } from '../lib/decimal-input.js';
+  import { foldText } from '../lib/search-text.js';
+
 
   export let params = {};
 
@@ -501,8 +503,8 @@
   $: pickerFiltered = (_isExternalSearch || !pickerSearch)
     ? _pickerListSorted
     : _pickerListSorted.filter(f =>
-        (f.name||'').toLowerCase().includes(pickerSearch.toLowerCase()) ||
-        (f.brand||'').toLowerCase().includes(pickerSearch.toLowerCase()));
+        foldText(f.name).includes(foldText(pickerSearch)) ||
+        foldText(f.brand).includes(foldText(pickerSearch)));
 
   // Switching the outer tab (Foods/Meals/Recipes) resets cross-source state
   // so the Foods source filter doesn't leak into Meals/Recipes views.

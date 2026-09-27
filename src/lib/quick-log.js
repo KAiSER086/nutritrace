@@ -17,6 +17,7 @@ import { API, NtApi } from './api.js';
 import { offNutritionStatus, needsFullLookup } from './off-nutrition.js';
 import { callAI, callAIProxy } from './aiChat.js';
 import { envLocks } from '../stores/settings.js';
+import { foldText } from './search-text.js';
 
 // ── Step 1: AI parses the input string into structured items ──────────────
 
@@ -337,18 +338,18 @@ async function _matchFood(parsedItem) {
 // live in separate API endpoints (meals vs meals?recipes=1).
 async function _matchMeal(parsedItem, isRecipe) {
   const out = { item: parsedItem, candidates: [], best: null, source: isRecipe ? 'recipe' : 'meal' };
-  const query = (parsedItem.name || '').toLowerCase();
+  const query = foldText(parsedItem.name);
   if (!query) return out;
 
   try {
     const all = isRecipe ? await NtApi.getRecipes() : await NtApi.getMeals();
     const matches = (all || []).filter(m => {
-      const n = (m.name || '').toLowerCase();
+      const n = foldText(m.name);
       return query.split(/\s+/).every(tok => n.includes(tok));
     });
     if (matches.length === 0) {
       // No exact-token match — fall back to substring on the full query
-      const fuzzy = (all || []).filter(m => (m.name || '').toLowerCase().includes(query));
+      const fuzzy = (all || []).filter(m => foldText(m.name).includes(query));
       if (fuzzy.length > 0) {
         out.candidates = fuzzy.slice(0, 5);
         out.best = fuzzy[0];
@@ -428,9 +429,9 @@ const _WATER_DEFAULTS = {
 
 async function _matchWater(parsedItem) {
   const out = { item: parsedItem, candidates: [], best: null, source: 'water' };
-  const name = (parsedItem.name || '').toLowerCase().trim();
+  const name = foldText(parsedItem.name).trim();
   const qty  = Number(parsedItem.quantity) > 0 ? Number(parsedItem.quantity) : 1;
-  const unit = (parsedItem.unit || '').toLowerCase().trim();
+  const unit = foldText(parsedItem.unit).trim();
 
   let amountMl = 0;
 
@@ -438,11 +439,11 @@ async function _matchWater(parsedItem) {
   const containers = DB.getSetting('waterContainers', []);
   if (Array.isArray(containers) && containers.length > 0) {
     const match = containers.find(c =>
-      (c.name || '').toLowerCase() === name ||
-      (c.name || '').toLowerCase() === unit
+      foldText(c.name) === name ||
+      foldText(c.name) === unit
     ) || containers.find(c =>
-      name.includes((c.name || '').toLowerCase()) ||
-      (c.name || '').toLowerCase().includes(name)
+      name.includes(foldText(c.name)) ||
+      foldText(c.name).includes(name)
     );
     if (match) {
       amountMl = Math.round((match.volumeMl || 250) * qty);

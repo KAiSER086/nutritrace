@@ -55,6 +55,8 @@
   import Webhooks          from './settings/Webhooks.svelte';
   import About             from './settings/About.svelte';
   import Profile           from './Profile.svelte';
+  import { foldText } from '../lib/search-text.js';
+
 
   // ── Route param → current section ──────────────────────────────────────
   // svelte-spa-router route `/settings/:section` → params.section.
@@ -146,7 +148,7 @@
 
   // ── Settings search (index only) ───────────────────────────────────────
   let settingsSearch = '';
-  $: settingsQuery = settingsSearch.toLowerCase().trim();
+  $: settingsQuery = foldText(settingsSearch).trim();
 
   // On mobile / narrow, typing into the search bar while on a
   // sub-page auto-navigates back to the index with the query so
@@ -419,7 +421,7 @@
     // laid out its final geometry before we measure/scroll.
     await tick();
     await new Promise(r => setTimeout(r, 60));
-    const q_norm = q.toLowerCase().trim();
+    const q_norm = foldText(q).trim();
     if (!q_norm) return;
     const scope = document.querySelector('.subpage-view');
     if (!scope) return;
@@ -428,7 +430,7 @@
     );
     let hit = null;
     for (const el of candidates) {
-      if ((el.textContent || '').toLowerCase().includes(q_norm)) { hit = el; break; }
+      if (foldText(el.textContent).includes(q_norm)) { hit = el; break; }
     }
     if (!hit) return;
     // Climb to the enclosing .setting-row for the highlight anchor —

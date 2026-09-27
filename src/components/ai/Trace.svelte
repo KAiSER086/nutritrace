@@ -32,6 +32,8 @@
   import { showError } from '../../stores/toast.js';
   import { isNative, getServerUrl, getAuthToken, apiUrl } from '../../lib/platform.js';
   import { acquireScreenWakeLock } from '../../lib/wake-lock.js';
+  import { foldText } from '../../lib/search-text.js';
+
 
   // ── State ──────────────────────────────────────────────────────────────────
   let panelOpen  = false;
@@ -291,12 +293,12 @@
               if (typeof m.notes === 'string' && m.notes.trim()) out.notes = m.notes.trim();
               return out;
             };
-            const q = (args.query || '').toLowerCase().trim();
+            const q = foldText(args.query).trim();
             let list = [
               ...rawMeals.map(m => shape(m, 'meal')),
               ...rawRecipes.map(m => shape(m, 'recipe')),
             ];
-            if (q) list = list.filter(m => m.name?.toLowerCase().includes(q));
+            if (q) list = list.filter(m => foldText(m.name).includes(q));
             return { count: list.length, meals: list.slice(0, 50) };
           } catch { return { error: 'Could not load meals library' }; }
         }

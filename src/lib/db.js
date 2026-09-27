@@ -1,6 +1,8 @@
 /**
  * db.js - IndexedDB abstraction layer for NutriTrace
  */
+import { foldText } from './search-text.js';
+
 const DB = (() => {
   const DB_NAME = 'nutritrace';
   const DB_VERSION = 2;
@@ -203,10 +205,10 @@ const DB = (() => {
     },
     async searchFoods(query) {
       const all = await this.getAll('foodList');
-      const q = query.toLowerCase();
+      const q = foldText(query);
       return all.filter(f =>
-        (f.name && f.name.toLowerCase().includes(q)) ||
-        (f.brand && f.brand.toLowerCase().includes(q))
+        foldText(f.name).includes(q) ||
+        foldText(f.brand).includes(q)
       );
     },
     async getDiaryForDate(dateStr) {

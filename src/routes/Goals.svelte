@@ -15,6 +15,8 @@
   import { loadEntry } from '../stores/diary.js';
   import { showSuccess } from '../stores/toast.js';
   import MacroRing from '../components/diary/MacroRing.svelte';
+  import { foldText } from '../lib/search-text.js';
+
 
   // Mirror settings/Goals.svelte: any wearable that reports calorie burn
   // unlocks Dynamic mode. Uses the shared derived fitbitFamilyEnabled so
@@ -640,9 +642,9 @@
   // ── All-fields filter (desktop search input) ───────────────────────────
   let _allFieldsQuery = '';
   function _matchesQuery(stat) {
-    const q = _allFieldsQuery.trim().toLowerCase();
+    const q = foldText(_allFieldsQuery).trim();
     if (!q) return true;
-    return ((stat.label || stat.id) + '').toLowerCase().includes(q);
+    return foldText((stat.label || stat.id) + '').includes(q);
   }
 
   // ── Reset-all-goals (rail button on desktop) ───────────────────────────
