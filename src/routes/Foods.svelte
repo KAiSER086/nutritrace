@@ -400,7 +400,15 @@
   // A search result with no "as sold" values says so rather than 0 kcal. The
   // search index leaves values out, so the full product may still have some:
   // "listed" is what is true of the result itself.
-  const _offNoValues = (f) => !!f && offNutritionStatus(f, API.offNutritionInfo(f.barcode)) !== 'ok';
+  const _offNoValues = (f) => {
+    if (!f) return false;
+    // The row shows the result's own numbers. The search index leaves them
+    // out for some products that do have values (tapping one looks them up),
+    // and those rows would read 0 kcal.
+    const kcal = Number(f.nutrition?.calories ?? f.calories);
+    if (Array.isArray(f._offPresent) && !f._offPresent.length && !(kcal > 0)) return true;
+    return offNutritionStatus(f, API.offNutritionInfo(f.barcode)) !== 'ok';
+  };
   // Ticked results added together skip pickFood, so they are checked here: a
   // result with no values is looked up in full (and takes its values if it
   // has them); one that still has none is left out and named.

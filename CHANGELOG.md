@@ -20,6 +20,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Refresh from OFF brings a food up to date with Open Food Facts** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). It only filled empty fields, so a value changed on Open Food Facts never came through, and a server with a local Open Food Facts mirror answered from its older copy. It now updates the values Open Food Facts has, converted to the food's own portion, leaves the rest alone, and says when there is nothing it can use. Thanks @fatman00 for the report.
 - **Open Food Facts products with no "as sold" values no longer come in as 0 kcal** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). Search results say "No values listed", the product can't be added to the diary or a meal until it has values, and Trace and Smart Log say so instead of logging 0 kcal. When Open Food Facts only has "as prepared" values, the food editor shows them and lets you choose to use them, with a note on the food saying so.
 - **Trace, Smart Log and the meal editor use a product's real values when a search result leaves them out.** They used to save it as 0 kcal.
+- **Open Food Facts products with both "as sold" and "as prepared" values come in "as sold"** ([#241](https://github.com/TraceApps/nutritrace/issues/241)). Open Food Facts' API only gave NutriTrace the "as prepared" values for these products, such as a can of beans, drink powders and baby formula.
 
 ---
 

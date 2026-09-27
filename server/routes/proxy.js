@@ -108,9 +108,10 @@ async function _tryLocalOff(parsedUrl) {
   const host = parsedUrl.hostname;
   const path = parsedUrl.pathname;
   const airGap = isLocalOffOnly();
-  // Barcode lookup: /api/vN/product/CODE.json (also handle .json-less)
-  if (host === 'world.openfoodfacts.org' && /^\/api\/v\d+\/product\//.test(path)) {
-    const m = path.match(/^\/api\/v\d+\/product\/([^/.]+)/);
+  // Barcode lookup: /api/vN/product/CODE.json (also handle .json-less), and
+  // point versions like v3.5 (#241), which the mirror answers the same way.
+  if (host === 'world.openfoodfacts.org' && /^\/api\/v\d+(?:\.\d+)?\/product\//.test(path)) {
+    const m = path.match(/^\/api\/v\d+(?:\.\d+)?\/product\/([^/.]+)/);
     if (!m) return undefined;
     const code = m[1];
     const result = await lookupByBarcode(code);

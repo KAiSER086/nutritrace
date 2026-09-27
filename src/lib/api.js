@@ -3,6 +3,7 @@
  */
 import { rankOFFResults } from './off-rank.js';
 import { offProductName } from './off-name.js';
+import { asSoldNutriments } from './off-nutrition-sets.js';
 
 // In native mode, call external APIs directly (no CORS in WebView).
 // In web mode, go through the server proxy to avoid CORS.
@@ -212,6 +213,36 @@ const API = {
   OFF_BASE: 'https://world.openfoodfacts.org',
 
   /** What OFF has for a product seen this session, or null (see _offInfo). */
+  // #241: a full product lookup, with the product's "as sold" values when
+  // v3 leaves them out. v3 serves one set of values and prefers "as prepared",
+  // so a product that has both comes back "as prepared" only; v3.5 serves all
+  // the sets (see off-nutrition-sets.js). Asked only in that case, and any
+  // failure or surprise keeps the v3 answer, as does an "as sold" set with no
+  // calories (a formula listing only "sugars 0"): 0 kcal is worse than the
+  // "as prepared" values the user is offered then.
+  async _mapFullOFFProduct(product, code, { live = false } = {}) {
+    const mapped = this._mapOFFProduct(product, { full: true });
+    if (!mapped || !mapped._offPreparedOnly) return mapped;
+    try {
+      const url = `${this.OFF_BASE}/api/v3.5/product/${code}?fields=nutrition`;
+      const res = await _extFetch(url, { live });
+      if (!res.ok) return mapped;
+      const data = await res.json();
+      const asSold = _isOffSuccess(data) ? asSoldNutriments(data.product?.nutrition, product.serving_quantity) : null;
+      if (!asSold) return mapped;
+      const merged = this._mapOFFProduct({
+        ...product,
+        nutriments: { ...(product.nutriments || {}), ...asSold.nutriments },
+        nutrition_data_per: asSold.per,
+      }, { full: true });
+      if (merged && merged._offPresent.includes('calories')) return merged;
+      // The merge registered its own reading of the product; put back v3's.
+      return this._mapOFFProduct(product, { full: true });
+    } catch {
+      return mapped;
+    }
+  },
+
   offNutritionInfo(barcode) {
     return barcode ? (_offInfo.get(String(barcode)) || null) : null;
   },
@@ -231,7 +262,7 @@ const API = {
       if (!res.ok) return null;
       const data = await res.json();
       if (!_isOffSuccess(data)) return null;
-      return this._mapOFFProduct(data.product, { full: true });
+      return await this._mapFullOFFProduct(data.product, barcode, { live });
     } catch(e) {
       console.error('Barcode lookup failed:', e);
       return null;
@@ -270,7 +301,7 @@ const API = {
       if (!res.ok) return null;
       const data = await res.json();
       if (!_isOffSuccess(data)) return null;
-      const mapped = this._mapOFFProduct(data.product, { full: true });
+      const mapped = await this._mapFullOFFProduct(data.product, code);
       if (mapped) {
         if (this._offHydrateCache.size >= this._OFF_HYDRATE_MAX) {
           const oldest = this._offHydrateCache.keys().next().value;
