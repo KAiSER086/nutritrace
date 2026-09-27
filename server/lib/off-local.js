@@ -60,6 +60,16 @@ let _instance = null;        // DuckDB instance — kept so we can close + reope
 let _initPromise = null;     // single-flight init guard
 let _disabled = false;       // permanent kill switch after init failure
 let _dbPath = null;          // resolved path for log messages
+
+// A DuckDB connection runs one statement at a time. Two at once, a search and
+// its count or two people searching together, fail now and then with "Failed
+// to execute prepared statement", so every request-time query waits its turn.
+let _queue = Promise.resolve();
+function _query(conn, sql, params) {
+  const run = _queue.then(() => conn.runAndReadAll(sql, params));
+  _queue = run.catch(() => {});
+  return run;
+}
 let _isParquet = false;      // true when the mirror is the HF Parquet shape;
                              // controls which SQL + which JS adapter run
 // #186 — set when the parquet mirror carries the OFF popularity_key
@@ -231,7 +241,7 @@ export async function lookupByBarcode(code) {
   const safeCode = String(code || '').trim();
   if (!safeCode) return null;
   try {
-    let rows = (await conn.runAndReadAll(
+    let rows = (await _query(conn,
       `SELECT * FROM products WHERE code = $1 LIMIT 1`,
       [safeCode]
     )).getRowObjects();
@@ -246,7 +256,7 @@ export async function lookupByBarcode(code) {
     // Single retry, only when the original code is exactly 12 digits, so
     // we don't accidentally widen the search for other formats.
     if (!rows.length && /^\d{12}$/.test(safeCode)) {
-      rows = (await conn.runAndReadAll(
+      rows = (await _query(conn,
         `SELECT * FROM products WHERE code = $1 LIMIT 1`,
         ['0' + safeCode]
       )).getRowObjects();
@@ -403,8 +413,8 @@ export async function searchByName(query, { page = 1, pageSize = 20 } = {}) {
       const pats = folded ? toksFolded : toks;
       const start = folded ? startPatternFolded : startPattern;
       return Promise.all([
-        conn.runAndReadAll(sqlFor(folded),      [...pats, start, pageSize, offset]),
-        conn.runAndReadAll(countSqlFor(folded), [...pats]),
+        _query(conn, sqlFor(folded),      [...pats, start, pageSize, offset]),
+        _query(conn, countSqlFor(folded), [...pats]),
       ]);
     };
     let [reader, countReader] = await _read(false);
