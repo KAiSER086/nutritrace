@@ -1143,12 +1143,12 @@
   },
   "settings_support": {
     "lead": "NutriTrace is free and always will be. Support is optional and never unlocks anything.",
-    "other_ways": "Other ways to help",
+    "other_ways": "Other Ways to Help",
     "star": "Star on GitHub",
     "star_desc": "Stars are how self-hosted projects get found.",
-    "report_bug": "Report a bug",
+    "report_bug": "Report a Bug",
     "report_bug_desc": "A clear report fixes it for everyone who hits the same thing.",
-    "translate": "Help translate",
+    "translate": "Help Translate",
     "translate_desc": "Make NutriTrace usable in your language, on Weblate."
   },
   "settings_merge": {
