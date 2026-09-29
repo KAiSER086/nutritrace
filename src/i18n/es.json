@@ -323,6 +323,9 @@
     },
     "webhooks": {
       "section": "Webhooks"
+    },
+    "support": {
+      "section": "Apoyar"
     }
   },
   "accept_invite": {
@@ -2299,5 +2302,15 @@
     "hint": {
       "tap_sync": "Toca \"Sincronizar\" para traer los últimos datos de tu dispositivo conectado."
     }
+  },
+  "settings_support": {
+    "lead": "NutriTrace es gratis y siempre lo va a ser. Apoyar es opcional y nunca desbloquea nada.",
+    "other_ways": "Otras formas de ayudar",
+    "star": "Estrella en GitHub",
+    "star_desc": "Las estrellas son lo que hace que la gente encuentre los proyectos que se instalan en un servidor propio.",
+    "report_bug": "Reportar un error",
+    "report_bug_desc": "Un reporte claro lo arregla para todos los que se topan con lo mismo.",
+    "translate": "Ayudar a traducir",
+    "translate_desc": "Haz que NutriTrace se pueda usar en tu idioma, en Weblate."
   }
 }
