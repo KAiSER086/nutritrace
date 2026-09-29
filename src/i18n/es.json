@@ -83,7 +83,16 @@
       "mobile_data": "Estás conectado por datos móviles. Puede que este servidor requiera tu Wi-Fi de casa o una VPN.",
       "check_connection": "Revisa tu Wi-Fi, la VPN o el servidor.",
       "saved_locally": "Tus cambios se guardaron localmente y se sincronizarán automáticamente."
-    }
+    },
+    "synced": "Sincronizada",
+    "sync_offline": "Sin conexión",
+    "refused": "Tu servidor no aceptó lo que está pendiente: {reason}. Quedó guardado aquí y se volverá a intentar.",
+    "sign_out_waiting_title": "Hay cambios pendientes",
+    "sign_out_waiting": "{count, plural, one {# cambio aún no llegó a tu servidor. Si cerrás sesión ahora, se perderá. Conectate y reintentá para conservarlo.} other {# cambios aún no llegaron a tu servidor. Si cerrás sesión ahora, se perderán. Conectate y reintentá para conservarlos.}}",
+    "sign_out_anyway": "Cerrar sesión de todos modos",
+    "pending_web": "{count, plural, =0 {Sin conexión. Tu diario sigue funcionando y guardando datos aquí.} one {Sin conexión. # día pendiente de subir.} other {Sin conexión. # días pendientes de subir.}}",
+    "sync_failing": "No se puede conectar con el servidor",
+    "not_synced": "Aún no sincronizado"
   },
   "settings": {
     "appearance": {
@@ -311,6 +320,9 @@
     },
     "about": {
       "section": "Acerca de"
+    },
+    "webhooks": {
+      "section": "Webhooks"
     }
   },
   "accept_invite": {
@@ -405,7 +417,17 @@
       "available_chip": "Actualización disponible",
       "instructions": "Para actualizar el servidor, ejecutá en la máquina host:",
       "copy_command": "Copiar comando",
-      "copied": "Copiado al portapapeles."
-    }
+      "copied": "Copiado al portapapeles.",
+      "copy_failed": "Error al copiar. Copiá el comando manualmente.",
+      "view_notes": "Ver notas de la versión"
+    },
+    "off_resting": "Desconectado. Tu servidor no contactará a GitHub. Actívalo para enterarte de nuevas funciones, correcciones y actualizaciones de seguridad.",
+    "off_notice_title": "Actualizaciones automáticas desactivadas",
+    "off_notice": "No recibirás notificaciones sobre novedades o seguridad. Al activarlo, se comprobará la última versión en GitHub cada pocas horas sin enviar tus datos.",
+    "turn_on": "Activar",
+    "not_now": "Ahora no",
+    "install_downloaded": "Instalar",
+    "ready_headline": "Actualización lista",
+    "ready_cta": "Actualizar página,"
   }
 }
