@@ -49,6 +49,11 @@
       <span>{$_('settings_about.server_from')} <a href="https://github.com/traceapps/nutritrace" target="_blank" rel="noopener" class="about-link">{$_('settings_about.server_open_source')}</a> {$_('settings_about.server_license')}</span>
     </div>
     <div class="setting-divider"></div>
+    <div class="about-row">
+      <span class="material-symbols-rounded about-feat-icon">apps</span>
+      <span>{$_('settings_about.family_line_prefix')}<a href="https://traceapps.github.io/docs/" target="_blank" rel="noopener" class="about-link">TraceApps</a>{$_('settings_about.family_line_suffix')}</span>
+    </div>
+    <div class="setting-divider"></div>
     <!-- Weblate credit line (Libre plan attribution). Passive callout —
          users who care about translations can follow through to help;
          everyone else just reads it as a credit. -->

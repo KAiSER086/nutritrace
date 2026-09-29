@@ -1139,6 +1139,8 @@
     "server_from": "Server:",
     "server_open_source": "Open Source",
     "server_license": "(AGPL-3.0)",
+    "family_line_prefix": "Part of the ",
+    "family_line_suffix": " family",
     "translations_from": "Translations powered by"
   },
   "settings_support": {

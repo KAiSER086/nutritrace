@@ -17,6 +17,7 @@ A dev pre-release of the 1.4.0 minor. Spanish, a Support page in Settings, uploa
 
 - **Spanish.** NutriTrace can be used in Spanish: pick it in Settings → Regional & Units. Translated almost in full by @herver1971 on Weblate; only the new Support page is still in English. Thank you!
 - **Settings has a Support page**, next to About: Ko-fi and GitHub Sponsors, plus free ways to help (star the repo, report a bug, translate). It replaces the support row that used to sit in About.
+- **About links to the TraceApps family.**
 
 ### Changed
 
