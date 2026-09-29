@@ -315,7 +315,7 @@
     webhooks:          ['webhooks','webhook','automation','n8n','home assistant','ifttt','push','event','integration','integrations','http post','callback url','signature','hmac','secret'],
     helpImprove:       ['diagnostics','logs','verbose','calibration','export','bug','report','troubleshoot'],
     updates:           ['updates','update','upgrade','version','new version','changelog','release','releases','apk','install','download','check for updates','auto-check','check frequency','check interval','how often','hourly','daily','manual','manual only','cadence','banner','notification','channel','stable','dev','dev-latest','beta','github','server update','docker','compose','docker-compose'],
-    about:             ['about','version','nutritrace'],
+    about:             ['about','version','nutritrace','donate','support','ko-fi','sponsor','github sponsors'],
   };
 
   // Visibility predicate for section-toggle rows. Only filters when
