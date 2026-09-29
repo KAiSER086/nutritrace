@@ -1,6 +1,8 @@
 <script context="module">
   // Survives the remount between /settings and /settings/<slug> (#227).
-  const _scrollMemo = { scroller: null, indexTop: 0 };
+  // railTop: the desktop rail is rebuilt by that remount too, so opening a
+  // section from the index would otherwise snap the rail back to Profile.
+  const _scrollMemo = { scroller: null, indexTop: 0, railTop: 0 };
 </script>
 
 <script>
@@ -103,8 +105,13 @@
     const s = _pageScroller();
     // Same scroller as last time: we came here from elsewhere in Settings.
     // A different one: Settings was opened fresh and already starts at 0.
-    if (s && s === _scrollMemo.scroller) _placeScroll(currentSection);
-    else _scrollMemo.indexTop = 0;
+    if (s && s === _scrollMemo.scroller) {
+      _placeScroll(currentSection);
+      if (_railEl) _railEl.scrollTop = _scrollMemo.railTop;
+    } else {
+      _scrollMemo.indexTop = 0;
+      _scrollMemo.railTop = 0;
+    }
     _scrollMemo.scroller = s;
     _scrollerEl = s;
     s?.addEventListener('scroll', _recordIndexScroll, { passive: true });
@@ -752,7 +759,8 @@
       <!-- Left rail (desktop only, ≥1024px). Always shows the full
            section list so users can jump between sections without
            going back to the index. Hidden on mobile via CSS. -->
-      <aside class="settings-nav-rail" bind:this={_railEl}>
+      <aside class="settings-nav-rail" bind:this={_railEl}
+             on:scroll={() => { _scrollMemo.railTop = _railEl.scrollTop; }}>
         <!-- Sliding highlight pill (desktop rail). Absolutely
              positioned; its translateY + height animate to the
              active rail button on every section change. Behind
