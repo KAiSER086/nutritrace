@@ -57,22 +57,6 @@
       <span>{$_('settings_about.translations_from')} <a href="https://hosted.weblate.org/engage/nutritrace/" target="_blank" rel="noopener" class="about-link">Weblate</a></span>
     </div>
     <div class="setting-divider"></div>
-    <div class="about-row" style="flex-direction:column;align-items:flex-start;gap:8px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="material-symbols-rounded about-feat-icon">volunteer_activism</span>
-        <span>{$_('settings_about.support_dev')}</span>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;padding-left:30px">
-        <a href="https://ko-fi.com/traceapps" target="_blank" rel="noopener" class="btn btn-secondary" style="height:30px;font-size:12px;padding:0 12px">
-          <span class="material-symbols-rounded" style="font-size:14px">coffee</span> Ko-fi
-        </a>
-        <a href="https://github.com/sponsors/TraceApps" target="_blank" rel="noopener" class="btn btn-secondary" style="height:30px;font-size:12px;padding:0 12px">
-          <span class="material-symbols-rounded" style="font-size:14px">favorite</span> GitHub Sponsors
-        </a>
-      </div>
-      <div class="setting-desc" style="padding-left:30px;font-size:11px">{$_('settings_about.support_note')} {$_('settings_about.support_monthly')}</div>
-    </div>
-    <div class="setting-divider"></div>
     <div class="about-desc" style="font-size:11px;color:var(--text-3);line-height:1.5">
       <strong>Disclaimer.</strong> NutriTrace is not medical, health, or nutrition-professional
       software. It does not provide medical advice, diagnosis, treatment, or personalized nutrition

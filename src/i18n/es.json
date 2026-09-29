@@ -1177,14 +1177,12 @@
   },
   "settings_admin_group": "Administración",
   "settings_about": {
-    "support_note": "NutriTrace es y va a seguir siendo gratis para instalar en tu servidor. El objetivo actual es conseguir una Mac y un iPhone para que las apps Trace funcionen bien en iOS.",
     "food_data_from": "Datos de alimentos de",
     "food_data_license": "(ODbL)",
     "server_from": "Servidor:",
     "server_open_source": "Código abierto",
     "server_license": "(AGPL-3.0)",
-    "translations_from": "Traducciones con la ayuda de",
-    "support_dev": "Apoyar el desarrollo"
+    "translations_from": "Traducciones con la ayuda de"
   },
   "settings_merge": {
     "title": "Opciones de sincronización",

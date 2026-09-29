@@ -53,6 +53,7 @@
   import Email             from './settings/Email.svelte';
   import ApiTokens         from './settings/ApiTokens.svelte';
   import Webhooks          from './settings/Webhooks.svelte';
+  import Support           from './settings/Support.svelte';
   import About             from './settings/About.svelte';
   import Profile           from './Profile.svelte';
   import { foldText } from '../lib/search-text.js';
@@ -246,6 +247,7 @@
     email:             { titleKey: 'settings.email.section',             icon: 'mail' },
     apiTokens:         { titleKey: 'settings.api_tokens.section',        icon: 'key' },
     webhooks:          { titleKey: 'settings.webhooks.section',          icon: 'webhook' },
+    support:           { titleKey: 'settings.support.section',           icon: 'volunteer_activism' },
     about:             { titleKey: 'settings.about.section',             icon: 'info' },
     profile:           { titleKey: 'profile.title',                      icon: 'person' },
   };
@@ -279,6 +281,7 @@
     email:             Email,
     apiTokens:         ApiTokens,
     webhooks:          Webhooks,
+    support:           Support,
     about:             About,
     profile:           Profile,
   };
@@ -315,7 +318,8 @@
     webhooks:          ['webhooks','webhook','automation','n8n','home assistant','ifttt','push','event','integration','integrations','http post','callback url','signature','hmac','secret'],
     helpImprove:       ['diagnostics','logs','verbose','calibration','export','bug','report','troubleshoot'],
     updates:           ['updates','update','upgrade','version','new version','changelog','release','releases','apk','install','download','check for updates','auto-check','check frequency','check interval','how often','hourly','daily','manual','manual only','cadence','banner','notification','channel','stable','dev','dev-latest','beta','github','server update','docker','compose','docker-compose'],
-    about:             ['about','version','nutritrace','donate','support','ko-fi','sponsor','github sponsors'],
+    support:           ['support','donate','donation','sponsor','github sponsors','ko-fi','kofi','tip','star','report a bug','bug','translate','weblate','help'],
+    about:             ['about','version','nutritrace','license'],
   };
 
   // Visibility predicate for section-toggle rows. Only filters when
@@ -666,6 +670,12 @@
     {/if}
   {/if}
 
+  <p class="settings-group-label">NutriTrace</p>
+  <button class="section-toggle" class:hidden={!sectionVisible(settingsQuery, 'support')} class:active={currentSection === 'support'} aria-current={currentSection === 'support' ? 'page' : undefined} on:click={() => toggleSection('support')}>
+    <span class="material-symbols-rounded si">volunteer_activism</span>
+    <span>{$_('settings.support.section')}</span>
+    <span class="material-symbols-rounded chevron">expand_more</span>
+  </button>
   <button class="section-toggle" class:hidden={!sectionVisible(settingsQuery, 'about')} class:active={currentSection === 'about'} aria-current={currentSection === 'about' ? 'page' : undefined} on:click={() => toggleSection('about')}>
     <span class="material-symbols-rounded si">info</span>
     <span>{$_('settings.about.section')}</span>
@@ -1474,6 +1484,10 @@
       gap: 24px;
       align-items: start;
     }
+    /* The pane's first card starts level with the rail's top edge.
+       .section-body's 12px top padding (right for the phone's stacked
+       view) pushed every section 12px below the rail here. */
+    :global(html.wide-content) .settings-pane :global(.section-body) { padding-top: 0; }
 
 
     /* Left rail — sticky below the header + search bar, own scroll

@@ -321,6 +321,9 @@
     "webhooks": {
       "section": "Webhooks"
     },
+    "support": {
+      "section": "Support"
+    },
     "about": {
       "section": "About"
     }
@@ -1131,15 +1134,22 @@
   },
   "settings_admin_group": "Admin",
   "settings_about": {
-    "support_note": "NutriTrace is free to self-host, always. The current goal is a Mac and an iPhone so the Trace apps can run properly on iOS.",
-    "support_monthly": "GitHub Sponsors helps with the monthly costs.",
     "food_data_from": "Food data from",
     "food_data_license": "(ODbL)",
     "server_from": "Server:",
     "server_open_source": "Open Source",
     "server_license": "(AGPL-3.0)",
-    "translations_from": "Translations powered by",
-    "support_dev": "Support Development"
+    "translations_from": "Translations powered by"
+  },
+  "settings_support": {
+    "lead": "NutriTrace is free and always will be. Support is optional and never unlocks anything.",
+    "other_ways": "Other ways to help",
+    "star": "Star on GitHub",
+    "star_desc": "Stars are how self-hosted projects get found.",
+    "report_bug": "Report a bug",
+    "report_bug_desc": "A clear report fixes it for everyone who hits the same thing.",
+    "translate": "Help translate",
+    "translate_desc": "Make NutriTrace usable in your language, on Weblate."
   },
   "settings_merge": {
     "title": "Sync Options",
