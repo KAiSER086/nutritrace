@@ -16,6 +16,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Settings pages line up with the section list** on desktop and foldables. Every page started 12px below the list beside it.
 - **The Settings section list keeps its place** on desktop and foldables. Opening a section from the Settings page scrolled the list beside it back to Profile.
 
+
+### Security
+
+- **undici** bumped 6.28.0 to 6.29.0, closes [GHSA-3wwx-pv8p-q78v](https://github.com/advisories/GHSA-3wwx-pv8p-q78v) (moderate: a WebSocket server could crash the process). NutriTrace opens no WebSocket connections.
+- **ip-address** bumped 10.4.0 to 10.7.2, closes [GHSA-2vr4-cq9g-pvrc](https://github.com/advisories/GHSA-2vr4-cq9g-pvrc) (moderate: one IPv6 range was not recognized as local). It only comes in through the MCP server's rate limiter; NutriTrace's own SSRF guard does not use it.
+- **nodemailer** bumped 9.1.1 to 10.0.12 on the server, closes [GHSA-6vj9-mwq6-2f5v](https://github.com/advisories/GHSA-6vj9-mwq6-2f5v) (moderate: separate mail transports could share one TLS server name). Removed from the web app's own dependencies, where nothing used it.
+- `npm audit` reports 0 vulnerabilities for the app and the server.
 ---
 
 ## [1.4.0-dev03] - 2026-09-27 (pre-release)
